@@ -26,7 +26,5 @@ ADD hive/files/init-hive.sh /
 RUN chmod +x /init-hive.sh
 
 EXPOSE 10000
-EXPOSE 10001
-EXPOSE 10002
 
 ENTRYPOINT ["/init-hive.sh"]
