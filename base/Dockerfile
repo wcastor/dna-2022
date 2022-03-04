@@ -15,11 +15,14 @@ RUN curl -O https://dist.apache.org/repos/dist/release/hadoop/common/KEYS
 RUN gpg --import KEYS
 
 ENV HADOOP_VERSION 3.3.1
-ENV HADOOP_URL https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
+ENV HADOOP_URL_AMD64 https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}.tar.gz
+ENV HADOOP_URL_AARCH64 https://dlcdn.apache.org/hadoop/common/hadoop-${HADOOP_VERSION}/hadoop-${HADOOP_VERSION}-aarch64.tar.gz
 
 RUN set -x \
-    && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
-    && curl -fSL "$HADOOP_URL.asc" -o /tmp/hadoop.tar.gz.asc \
+    && ARCH=$(uname -m) \
+    && case "${ARCH}" in x86_64) readonly DOWNLOAD_URL="${HADOOP_URL_AMD64}" ;; aarch64) readonly DOWNLOAD_URL="${HADOOP_URL_AARCH64}" ;; *) echo "Unsupported architecture ${ARCH}" exit 1 ;; esac \
+    && curl -fSL "$DOWNLOAD_URL" -o /tmp/hadoop.tar.gz \
+    && curl -fSL "$DOWNLOAD_URL.asc" -o /tmp/hadoop.tar.gz.asc \
     && gpg --verify /tmp/hadoop.tar.gz.asc \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
     && rm /tmp/hadoop.tar.gz*
