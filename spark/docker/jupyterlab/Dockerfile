@@ -4,6 +4,8 @@ FROM eclipse-temurin:8-jdk-focal
 
 ARG spark_version
 ARG jupyterlab_version
+ARG shared_workspace=/opt/workspace
+ENV SHARED_WORKSPACE=${shared_workspace}
 RUN mkdir -p ${SHARED_WORKSPACE}
 COPY spark/workspace/* ${SHARED_WORKSPACE}/
 RUN apt-get update -y && \
