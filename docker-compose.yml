@@ -7,7 +7,6 @@ services:
     restart: always
     ports:
       - 9870:9870
-      - 8020:8020
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
       - ./shared_folder:/opt/workspace
@@ -34,7 +33,7 @@ services:
     ports:
       - 8088:8088
     environment:
-      SERVICE_PRECONDITION: "namenode:8020 namenode:9870 datanode:9864"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864"
     env_file:
       - ./hadoop.env
 
@@ -43,7 +42,7 @@ services:
     container_name: nodemanager
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:8020 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     env_file:
       - ./hadoop.env
   
@@ -52,7 +51,7 @@ services:
     container_name: historyserver
     restart: always
     environment:
-      SERVICE_PRECONDITION: "namenode:8020 namenode:9870 datanode:9864 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 resourcemanager:8088"
     volumes:
       - hadoop_historyserver:/hadoop/yarn/timeline
     env_file:
@@ -148,7 +147,7 @@ services:
     volumes:
       - ./shared_folder:/opt/workspace
     environment:
-      SERVICE_PRECONDITION: "namenode:8020 namenode:9870 datanode:9864 hive-metastore-postgresql:5432 resourcemanager:8088"
+      SERVICE_PRECONDITION: "namenode:9870 datanode:9864 hive-metastore-postgresql:5432 resourcemanager:8088"
     ports:
       - "9083:9083"
     links:

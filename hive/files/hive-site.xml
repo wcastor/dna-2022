@@ -5,7 +5,7 @@
   </property>
   <property>
     <name>hive.metastore.warehouse.dir</name>
-    <value>/tmp/</value>
+    <value>hdfs://namenode:8020/user/hive/warehouse/</value>
   </property>
   <property>
     <name>javax.jdo.option.ConnectionURL</name>
