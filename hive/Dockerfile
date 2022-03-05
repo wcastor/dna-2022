@@ -17,7 +17,8 @@ RUN wget https://archive.apache.org/dist/hive/hive-$HIVE_VERSION/apache-hive-$HI
   && mkdir -p /data/hive/ \
   && mkdir -p $HIVE_CONF_DIR \
   && chmod 777 $HIVE_HOME/hcatalog/var/log \
-  && chmod 777 $HIVE_HOME/var/log
+  && chmod 777 $HIVE_HOME/var/log \
+  && rm apache-hive-$HIVE_VERSION-bin.tar.gz*
 
 # Configure
 ADD hive/files/hive-site.xml $HIVE_CONF_DIR/
