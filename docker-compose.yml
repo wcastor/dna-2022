@@ -181,6 +181,3 @@ volumes:
   hadoop_datanode:
   pg_data:
   hadoop_historyserver:
-  shared-workspace:
-    name: "hadoop-distributed-file-system"
-    driver: local
